@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv='refresh' content='200' charset='UTF-8'>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serre connectée</title>
+    <link rel="stylesheet" type="text/css" href="w3.css">
+    <script language="javascript">
+
+        //*control*//
+
+
+        function onLed() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "onled", true);
+    xhttp.send();
+}
+
+function offLed() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "off", true);
+    xhttp.send();
+}
+function onventi() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "onventi", true);
+    xhttp.send();
+}
+
+function offventi() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "offventi", true);
+    xhttp.send();
+}
+function arroser() {
+    var xhttp  = new XMLHttpRequest();
+    xhttp.open("GET", "onpompe", true);
+    xhttp.send();
+    setInterval(function getData0()
+
+    {
+        var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "offpompe", true);
+    xhttp.send();
+
+}, 5000);
+}
+
+function offLed() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "off", true);
+    xhttp.send();
+}
+
+
+/*lecture*/
+setInterval(function getData1()
+{
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function()
+    {
+        if(this.readyState == 4 && this.status == 200)
+        {
+            document.getElementById("luminosite").innerHTML = this.responseText;
+        }
+    };
+
+    xhttp.open("GET", "lireLuminosite", true);
+    xhttp.send();
+}, 2000);
+setInterval(function getData2()
+{
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function()
+    {
+        if(this.readyState == 4 && this.status == 200)
+        {
+            document.getElementById("humidite-sol").innerHTML = this.responseText;
+        }
+    };
+
+    xhttp.open("GET", "lirehumidite_sol", true);
+    xhttp.send();
+}, 2000);
+setInterval(function getData3()
+{
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function()
+    {
+        if(this.readyState == 4 && this.status == 200)
+        {
+            document.getElementById("humidite-air").innerHTML = this.responseText;
+        }
+    };
+
+    xhttp.open("GET", "lirehumidite_air", true);
+    xhttp.send();
+}, 2100);
+setInterval(function getData4()
+{
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function()
+    {
+        if(this.readyState == 4 && this.status == 200)
+        {
+            document.getElementById("temperature").innerHTML = this.responseText;
+        }
+    };
+
+    xhttp.open("GET", "liretemperature", true);
+    xhttp.send();
+}, 2010);
+setInterval(function getData5()
+{
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function()
+    {
+        if(this.readyState == 4 && this.status == 200)
+        {
+            document.getElementById("etatled").innerHTML = this.responseText;
+        }
+    };
+
+    xhttp.open("GET", "etatLed", true);
+    xhttp.send();
+}, 2000);
+setInterval(function getData6()
+{
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function()
+    {
+        if(this.readyState == 4 && this.status == 200)
+        {
+            document.getElementById("etatpompe").innerHTML = this.responseText;
+        }
+    };
+
+    xhttp.open("GET", "etatpompe", true);
+    xhttp.send();
+}, 2000);
+setInterval(function getData7()
+{
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function()
+    {
+        if(this.readyState == 4 && this.status == 200)
+        {
+            document.getElementById("etatventi").innerHTML = this.responseText;
+        }
+    };
+
+    xhttp.open("GET", "etatventi", true);
+    xhttp.send();
+}, 1900);
+
+
+
+function test(){
+            const conn = document.getElementById("conn") ;
+            conn.classList.toggle("on");
+            const auto = document.getElementById("auto");
+            auto.classList.toggle("off");
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "connecte", true);
+            xhttp.send();
+}
+
+    </script>
+    <style type="text/css">
+        
+        p{
+            color: black;
+        }
+        body{
+                        background-size:cover ;
+        }
+        .interrupteur{
+            display: inline-block;
+            width: 50%;
+            height: 50%;
+            background-color: #ccc;
+            border-radius: 25px;
+            cursor: pointer;
+            position: relative;
+            top: 25%;
+        }
+        .glissiere{
+            position: absolute;
+            top: 5px;
+            left: 3px;
+            width: 27px;
+            height: 70%;
+            background-color: #fff;
+            border-radius: 21px;
+            transition: transform 0.2s ease-in-out;
+            
+        }
+        .conn{
+            display: none;
+        }
+        .conn.on{
+            display: block;
+        }
+        .auto.off{
+            display: none;
+        }
+        .auto{
+            display: block;
+        }
+        #toggle{
+            display:none;
+        }
+        .interrupteur input:checked + .glissiere{
+            transform: translateX(0);
+        }
+        .interrupteur input:not(:checked) + .glissiere{
+            transform: translateX(500%);
+        }
+        h4{
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body onload="afficherHeure()" class="w3-animate-opacity">
+    
+        <div class="w3-card w3-green w3-padding-small w3-center">
+            <h2>SERRE CONNECTÉE-AUTOMATIQUE</h2>
+            <div class="w3-white w3-right" style="width: 25%;position: absolute; top: 0px; left: 76%; border-left: 1px solid gray; height: 72.5px;">
+                <label class="interrupteur">
+                    <input type="checkbox" id="toggle" oninput="test()">
+                    <span class="glissiere"></span>MODE
+                    <p class="conn" id="conn">AUTOMATIQUE</p>
+                    <p id="auto" class="auto">CONNECTÉE </p>
+                </label>
+            </div>
+            </div>  
+        </div>
+        <div class="contain">
+            <div class="mini-contain w3-left " style="width: 50%;">
+                <div class="w3-card w3-padding-24 w3-margin w3-center" style="border: solid 3px white; border-radius: 10px; box-shadow: white 5px 5px 0px 0px;">
+                    <h4 class="">VARIABLES</h4>
+                    <label class="w3-padding-small">Humidité du sol: </label><span id="humidite-sol">0</span>% <br><br>
+                    <label class="w3-padding-small">Humidité air: </label><span id="humidite-air">0</span>% <br><br>
+                    <label class="w3-padding-small">Température: </label><span id="temperature">0</span>&deg;C <br><br>
+                    <label class="w3-padding-small">Luminosité: </label><span id="luminosite">0</span>Can 
+                </div>
+            <div class="w3-tag w3-card" style="width: 250px;border-radius: 50px; height: 180; position:absolute; top: 555px ; left :1090px;border: solid 3px white;box-shadow: white 5px 5px 0px 0px;"><h1>horaire</h1></div>
+                <div class="w3-tag w3-card" id="horloge" style="width: 250px;border-radius: 10px; height: 180; position:absolute; top: 625px ; left :1090px;border: solid 3px white;box-shadow: white 5px 5px 0px 0px;">
+                <script language="javascript">
+                    function afficherHeure(){
+                        //obtenir l'heure et la date actuelle
+                        var maintenant = new Date();
+                        //extraire les composants de l'heure
+                        var heures = maintenant.getHours();
+                        var minutes = maintenant.getMinutes();
+                        var secondes = maintenant.getSeconds();
+                        //formater les heures,minutes et secondes pour avoir toujours 2 chiffres
+                        heures = (heures < 10 ?"0":"")+heures;
+                        minutes = (minutes < 10 ?"0":"")+minutes;
+                        secondes = (secondes < 10 ?"0":"")+secondes;
+                        //afficher l'heure dans le format HH:MM:SS
+                        var heureActuelle = heures+":"+minutes+":"+secondes;
+                        //afficher l'heure dans la bilse HTML avec l'ID "horloge"
+                        document.getElementById("horloge").innerHTML = heureActuelle;
+                    
+                    }
+                    //mettre à jour l'heure toutes les secondes 
+                    setInterval(afficherHeure,1000); 
+                </script>
+                </div>
+            </div>
+            <div class="mini-contain w3-right " style="border: solid 3px white; border-radius: 10px; box-shadow: white 5px 5px 0px 0px;width: 50%; ">
+                <div class="w3-card w3-padding-24 w3-margin w3-center">
+                    <h4 class="">MANIPULATION</h4>
+                    <label class="w3-padding-small" style="text-decoration: underline;">Éclairage: </label> <button class="w3-button  w3-ripple  w3-green" onclick="onLed()">ON</button>  <button class="w3-button  w3-ripple  w3-red" onclick="offLed()">OFF</button><br><br>
+                    <label class="w3-padding-small" style="text-decoration: underline;">Arrosage: </label><button class="w3-button  w3-ripple  w3-green" onclick="arroser()">ARROSER</button><br><br>
+                    <label class="w3-padding-small" style="text-decoration: underline;">Ventilateur: </label><button class="w3-button  w3-ripple  w3-green" onclick="onventi()">ON</button>  <button class="w3-button  w3-ripple  w3-red" onclick="offventi()">OFF</button><br><br>
+   
+                </div>
+            </div>
+        </div>
+        <div class="w3-card w3-padding-24 w3-margin w3-center" style="position: absolute; top: 60%; left: 20%;border: solid 3px white; border-radius: 10px; box-shadow: white 5px 5px 0px 0px;width: 40%;">
+            <center><h4>ETAT DU SYSTEME</h4></center>
+            <label class="w3-padding-small" style="text-decoration: underline;">ETAT LED: </label><span id="etatled"></span><br><br>
+            <label class="w3-padding-small" style="text-decoration: underline;">ETAT ARROSOIR: </label><span id="etatpompe"></span><br><br>
+            <label class="w3-padding-small" style="text-decoration: underline;">ETAT VENTILATEUR: </label><span id="etatventi"></span><br><br>
+        </div>
+        
+</body>
+</html>
